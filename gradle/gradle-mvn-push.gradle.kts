@@ -3,37 +3,38 @@ apply(plugin = "org.gradle.signing")
 
 val isReleaseBuild: Boolean get() = !version.toString().endsWith("-SNAPSHOT")
 
-configure<PublishingExtension> {
-    repositories {
-        maven {
-            url = uri(
-                if (isReleaseBuild) {
-                    "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                } else {
-                    "https://oss.sonatype.org/content/repositories/snapshots"
-                }
-            )
+project.afterEvaluate {
+    configure<PublishingExtension> {
+        repositories {
+            maven {
+                url = uri(
+                    if (isReleaseBuild) {
+                        "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                    } else {
+                        "https://oss.sonatype.org/content/repositories/snapshots"
+                    }
+                )
 
-            credentials {
-                username = if (project.hasProperty("SONATYPE_NEXUS_USERNAME")) {
-                    project.property("SONATYPE_NEXUS_USERNAME").toString()
-                } else {
-                    ""
-                }
-                password = if (project.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
-                    project.property("SONATYPE_NEXUS_PASSWORD").toString()
-                } else {
-                    ""
+                credentials {
+                    username = if (project.hasProperty("SONATYPE_NEXUS_USERNAME")) {
+                        project.property("SONATYPE_NEXUS_USERNAME").toString()
+                    } else {
+                        ""
+                    }
+                    password = if (project.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
+                        project.property("SONATYPE_NEXUS_PASSWORD").toString()
+                    } else {
+                        ""
+                    }
                 }
             }
         }
-    }
 
-    project.afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 if (project.plugins.hasPlugin("com.android.library")) {
                     from(components["release"])
+                    artifact(project.tasks.getByName("sourcesJar"))
                 } else {
                     from(components["java"])
                 }
@@ -73,16 +74,16 @@ configure<PublishingExtension> {
             }
         }
     }
-}
 
-if (isReleaseBuild) {
-    configure<SigningExtension> {
-        sign(the<PublishingExtension>().publications["release"])
+    if (isReleaseBuild) {
+        configure<SigningExtension> {
+            sign(the<PublishingExtension>().publications["release"])
+        }
     }
-}
 
-tasks.register("publishSnapshot") {
-    if (!isReleaseBuild) {
-        dependsOn(tasks.getByName("publish"))
+    tasks.register("publishSnapshot") {
+        if (!isReleaseBuild) {
+            dependsOn(tasks.getByName("publish"))
+        }
     }
 }

@@ -23,4 +23,9 @@ task<Jar>("dokkaJar") {
     dependsOn("dokkaHtml")
 }
 
+task<Jar>("sourcesJar") {
+    archiveClassifier.set("sources")
+    from(android.sourceSets["main"].java.srcDirs)
+}
+
 apply(from = "$rootDir/gradle/gradle-mvn-push.gradle.kts")
