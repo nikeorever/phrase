@@ -63,14 +63,20 @@ subprojects {
     }
 
     afterEvaluate {
+        // Can't use the normal placeholder syntax to reference the kotlin* version, since that
+        // placeholder seems to only be evaluated if the module has a direct dependency on the library.
+        val versionProperties = java.util.Properties()
+        versionProperties.load(File(rootDir, "versions.properties").reader())
+        val kotlinVersion = versionProperties.getProperty("version.kotlin")
+
         configurations.configureEach {
             // There could be transitive dependencies in tests with a lower version. This could cause
             // problems with a newer Kotlin version that we use.
-            resolutionStrategy.force(Dependencies.Kotlin.reflect)
-            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.common)
-            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk8)
-            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk7)
-            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk6)
+            resolutionStrategy.force(Dependencies.Kotlin.reflect(kotlinVersion))
+            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.common(kotlinVersion))
+            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk8(kotlinVersion))
+            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk7(kotlinVersion))
+            resolutionStrategy.force(Dependencies.Kotlin.Stdlib.jdk6(kotlinVersion))
         }
     }
 }

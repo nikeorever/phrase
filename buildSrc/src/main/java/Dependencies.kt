@@ -1,36 +1,32 @@
 @file:JvmName("Deps")
 
-object Versions {
-    const val kotlin = "1.4.10"
-    const val targetSdk = 30
-    const val squareup_phrase = "1.1.0"
-}
-
 object Dependencies {
     object Kotlin {
-        const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
-        const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
+        private fun kotlin(module: String, version: String) = "org.jetbrains.kotlin:kotlin-$module:$version"
+        fun reflect(version: String) = kotlin("reflect", version)
+        val gradlePlugin = kotlin("gradle-plugin", "_")
 
         object Stdlib {
-            const val common = "org.jetbrains.kotlin:kotlin-stdlib-common:${Versions.kotlin}"
-            const val jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
-            const val jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-            const val jdk6 = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
+            fun common(version: String) = kotlin("stdlib-common", version)
+            fun jdk8(version: String) = kotlin("stdlib-jdk8", version)
+            fun jdk7(version: String) = kotlin("stdlib-jdk7", version)
+            fun jdk6(version: String) = kotlin("stdlib", version)
         }
     }
-    const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:1.4.10"
+
+    const val dokka = "org.jetbrains.dokka:dokka-gradle-plugin:_"
 
     object Android {
-        const val gradlePlugin = "com.android.tools.build:gradle:4.0.1"
+        const val gradlePlugin = "com.android.tools.build:gradle:_"
     }
 
     object AndroidX {
-        const val annotation = "androidx.annotation:annotation:1.1.0"
+        const val annotation = "androidx.annotation:annotation:_"
     }
 
     object Squareup {
-        const val phrase = "com.squareup.phrase:phrase:${Versions.squareup_phrase}"
-        const val kotlinpoet = "com.squareup:kotlinpoet:1.6.0"
+        const val phrase = "com.squareup.phrase:phrase:_"
+        const val kotlinpoet = "com.squareup:kotlinpoet:_"
     }
 
 }
