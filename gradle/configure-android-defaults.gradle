@@ -1,7 +1,5 @@
-def targetSdk = 30
-
 android {
-    compileSdkVersion targetSdk
+    compileSdkVersion Versions.targetSdk
     buildToolsVersion '30.0.2'
 
     compileOptions {
@@ -11,7 +9,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion targetSdk
+        targetSdkVersion Versions.targetSdk
         versionCode 1
         versionName "1.0"
     }

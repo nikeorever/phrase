@@ -1,5 +1,9 @@
 @file:JvmName("Deps")
 
+object Versions {
+    const val targetSdk = 30
+}
+
 object Dependencies {
     object Kotlin {
         private fun kotlin(module: String, version: String) = "org.jetbrains.kotlin:kotlin-$module:$version"
@@ -29,4 +33,5 @@ object Dependencies {
         const val kotlinpoet = "com.squareup:kotlinpoet:_"
     }
 
+    const val mavenPublish = "com.vanniktech:gradle-maven-publish-plugin:_"
 }

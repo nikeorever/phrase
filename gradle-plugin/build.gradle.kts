@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    `kotlin-dsl`
     id("org.jetbrains.dokka")
 }
 
@@ -22,7 +21,7 @@ sourceSets {
 val generateVersionTask = tasks.register("generateVersion") {
     val outputDir = file("$buildDir/gen")
 
-    inputs.property("runtimeVersion", rootProject.project(":runtime").version)
+    inputs.property("runtimeVersion", project.property("VERSION_NAME"))
     outputs.dir(outputDir)
 
     doLast {
@@ -42,17 +41,4 @@ val generateVersionTask = tasks.register("generateVersion") {
 
 tasks.getByName("compileKotlin").dependsOn(generateVersionTask)
 
-
-val dokkaDir = "${buildDir}/dokka"
-
-tasks.withType<org.jetbrains.dokka.gradle.DokkaTask> {
-    outputDirectory.set(file(dokkaDir))
-}
-
-task<Jar>("dokkaJar") {
-    archiveClassifier.set("javadoc")
-    from(dokkaDir)
-    dependsOn("dokkaHtml")
-}
-
-apply(from = "$rootDir/gradle/gradle-mvn-push.gradle.kts")
+apply("$rootDir/gradle/configure-maven-publish.gradle")

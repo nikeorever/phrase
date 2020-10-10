@@ -6,11 +6,9 @@ import com.android.builder.model.BuildType
 import com.android.ide.common.symbols.getPackageNameFromManifest
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.getByType
-import org.gradle.kotlin.dsl.repositories
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.File
+import java.util.*
 
 @Suppress("UnstableApiUsage")
 class PhrasePlugin : Plugin<Project> {
@@ -31,8 +29,8 @@ class PhrasePlugin : Plugin<Project> {
         android.buildTypes.onEach(::addDependencies).whenObjectAdded(::addDependencies)
 
         val variants = when {
-            isApp -> project.extensions.getByType<AppExtension>().applicationVariants
-            isLibrary -> project.extensions.getByType<LibraryExtension>().libraryVariants
+            isApp -> project.extensions.getByType(AppExtension::class.java).applicationVariants
+            isLibrary -> project.extensions.getByType(LibraryExtension::class.java).libraryVariants
             else -> error("PhrasePlugin[cn.nikeo.phrase] just support app or library")
         }
 
@@ -54,17 +52,19 @@ class PhrasePlugin : Plugin<Project> {
             project.buildDir, "generated/source/phrase/${variantSourceSetRes.variantName}"
         )
 
+        val generatePhraseTaskName =
+            "generate${variantSourceSetRes.variantName.capitalize(Locale.getDefault())}PhraseClasses"
         val generatePhraseTask =
-            project.tasks.create<GeneratePhraseClassesTask>("generate${variantSourceSetRes.variantName.capitalize()}PhraseClasses") {
-                this.variantSourceSetRes.set(variantSourceSetRes)
-                this.packageName.set(project.packageName())
-                this.outputDir.set(outputDir)
+            project.tasks.create(generatePhraseTaskName, GeneratePhraseClassesTask::class.java) {
+                it.variantSourceSetRes.set(variantSourceSetRes)
+                it.packageName.set(project.packageName())
+                it.outputDir.set(outputDir)
             }
 
         variant.registerJavaGeneratingTask(generatePhraseTask, outputDir)
 
         val kotlinCompileTask =
-            project.tasks.findByName("compile${variantSourceSetRes.variantName.capitalize()}Kotlin") as KotlinCompile
+            project.tasks.findByName("compile${variantSourceSetRes.variantName.capitalize(Locale.getDefault())}Kotlin") as KotlinCompile
         kotlinCompileTask.dependsOn(generatePhraseTask)
         val srcSet = project.objects.sourceDirectorySet(
             "mainPhrase${variantSourceSetRes.variantName}",
@@ -74,10 +74,8 @@ class PhrasePlugin : Plugin<Project> {
     }
 
     private fun addDependencies(buildType: BuildType) {
-        project.rootProject.allprojects {
-            repositories {
-                mavenCentral()
-            }
+        project.rootProject.allprojects { allProject ->
+            allProject.repositories.mavenCentral()
         }
 
         val configuration = if (project.configurations.findByName("api") != null)

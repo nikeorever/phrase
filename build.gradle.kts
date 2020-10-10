@@ -4,6 +4,7 @@ buildscript {
     dependencies {
         classpath(Dependencies.Android.gradlePlugin)
         classpath(Dependencies.Kotlin.gradlePlugin)
+        classpath(Dependencies.mavenPublish)
         classpath(Dependencies.dokka)
     }
 
@@ -21,9 +22,6 @@ subprojects {
         jcenter()
         google()
     }
-
-    group = project.property("GROUP").toString()
-    version = project.property("VERSION_NAME").toString()
 
     buildDir = File(rootProject.buildDir, name)
 
@@ -58,7 +56,6 @@ subprojects {
         configure<JavaPluginExtension> {
             sourceCompatibility = JavaVersion.VERSION_1_8
             targetCompatibility = JavaVersion.VERSION_1_8
-            withSourcesJar()
         }
     }
 
