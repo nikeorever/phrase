@@ -22,6 +22,34 @@ Execute gradle task 'generateDebugPhraseClasses' for debug build type
 ./gradlew :app:generateDebugPhraseClasses
 ```
 
+After successful execution, Gradle Plugin will generate a Kotlin File named **Phrase.kt** for you
+```kotlin
+// Automatically generated file. DO NOT MODIFY
+package cn.nikeo.reparaturapplication
+
+import android.content.Context
+import cn.nikeo.phrase.runtime.AbstractPhrase
+import kotlin.CharSequence
+import kotlin.Suppress
+
+@Suppress("ClassName")
+class Phrase_greeting(
+  context: Context
+) : AbstractPhrase(context = context, stringResId = R.string.greeting) {
+  fun my_name(value: CharSequence): Phrase_greeting {
+    put("my_name", value)
+    return this
+  }
+
+  fun other_name(value: CharSequence): Phrase_greeting {
+    put("other_name", value)
+    return this
+  }
+}
+
+fun greeting(context: Context): Phrase_greeting = Phrase_greeting(context)
+```
+
 Do enjoy formatting them like this:
 ```kotlin
 text.text = greeting(this)
