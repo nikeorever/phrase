@@ -9,25 +9,23 @@ configure<PublishingExtension> {
             url = uri(
                 if (isReleaseBuild) {
                     "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-                    "/home/xianxueliang/IdeaProjects/gradle/mavenRepository/releases"
                 } else {
                     "https://oss.sonatype.org/content/repositories/snapshots"
-                    "/home/xianxueliang/IdeaProjects/gradle/mavenRepository/snapshots"
                 }
             )
 
-//            credentials {
-//                username = if (project.hasProperty("SONATYPE_NEXUS_USERNAME")) {
-//                    project.property("SONATYPE_NEXUS_USERNAME").toString()
-//                } else {
-//                    ""
-//                }
-//                password = if (project.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
-//                    project.property("SONATYPE_NEXUS_PASSWORD").toString()
-//                } else {
-//                    ""
-//                }
-//            }
+            credentials {
+                username = if (project.hasProperty("SONATYPE_NEXUS_USERNAME")) {
+                    project.property("SONATYPE_NEXUS_USERNAME").toString()
+                } else {
+                    ""
+                }
+                password = if (project.hasProperty("SONATYPE_NEXUS_PASSWORD")) {
+                    project.property("SONATYPE_NEXUS_PASSWORD").toString()
+                } else {
+                    ""
+                }
+            }
         }
     }
 

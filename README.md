@@ -12,24 +12,24 @@ The purpose of this library is the same as [Paraphrase](https://github.com/JakeW
 Sample
 =====
 
-write your format strings like this:
+Do write your format strings like this:
 ```xml
 <string name="greeting">Hello, {other_name}! My name is {my_name}.</string>
 ```
 
-execute gradle task 'generateDebugPhraseClasses' for debug build type
+Execute gradle task 'generateDebugPhraseClasses' for debug build type
 ```shell script
 ./gradlew :app:generateDebugPhraseClasses
 ```
 
-enjoy formatting them like this:
+Do enjoy formatting them like this:
 ```kotlin
 text.text = greeting(this)
     .my_name("Jake Wharton")
     .other_name("GitHub user")
     .format()
 ```
-or
+Or
 ```kotlin
 greeting(this)
     .my_name("Jake Wharton")
