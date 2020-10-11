@@ -1,6 +1,10 @@
 package cn.nikeo.phrase.gradle
 
-import com.android.build.gradle.*
+import com.android.build.gradle.AppExtension
+import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
+import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.api.BaseVariant
 import com.android.builder.model.BuildType
 import com.android.ide.common.symbols.getPackageNameFromManifest
@@ -8,7 +12,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.File
-import java.util.*
+import java.util.Locale
 
 @Suppress("UnstableApiUsage")
 class PhrasePlugin : Plugin<Project> {
@@ -49,7 +53,8 @@ class PhrasePlugin : Plugin<Project> {
         ).also(::println)
 
         val outputDir = File(
-            project.buildDir, "generated/source/phrase/${variantSourceSetRes.variantName}"
+            project.buildDir,
+            "generated/source/phrase/${variantSourceSetRes.variantName}"
         )
 
         val generatePhraseTaskName =

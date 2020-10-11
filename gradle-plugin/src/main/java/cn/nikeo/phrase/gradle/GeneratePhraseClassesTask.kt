@@ -70,5 +70,4 @@ abstract class GeneratePhraseClassesTask : DefaultTask() {
         val xmlInput = InputSource(StringReader(xmlFile.readText()))
         return dBuilder.parse(xmlInput)
     }
-
 }

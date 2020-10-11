@@ -1,6 +1,10 @@
 package cn.nikeo.phrase.writer.classes
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.AnnotationSpec
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.FunSpec
+import com.squareup.kotlinpoet.TypeSpec
 import java.io.File
 
 class PhraseClassesWriter(private val packageName: String, private val stringResources: StringResources) {
@@ -24,20 +28,26 @@ class PhraseClassesWriter(private val packageName: String, private val stringRes
                     TypeSpec.classBuilder(phraseClassName)
                         .addAnnotation(AnnotationSpec.builder(Suppress::class).addMember("\"%L\"", "ClassName").build())
                         .superclass(CLASS_NAME_ABSTRACT_PHRASE)
-                        .addSuperclassConstructorParameter("context = %L, stringResId = %L", "context", "R.string.$stringName")
+                        .addSuperclassConstructorParameter(
+                            "context = %L, stringResId = %L",
+                            "context",
+                            "R.string.$stringName"
+                        )
                         .primaryConstructor(
                             FunSpec.constructorBuilder()
                                 .addParameter("context", CLASS_NAME_ANDROID_CONTEXT)
                                 .build()
                         )
-                        .addFunctions(tokens.map { token ->
-                            FunSpec.builder(token)
-                                .addParameter("value", CharSequence::class)
-                                .returns(phraseClassName)
-                                .addStatement("put(\"%L\", value)", token)
-                                .addStatement("return this")
-                                .build()
-                        })
+                        .addFunctions(
+                            tokens.map { token ->
+                                FunSpec.builder(token)
+                                    .addParameter("value", CharSequence::class)
+                                    .returns(phraseClassName)
+                                    .addStatement("put(\"%L\", value)", token)
+                                    .addStatement("return this")
+                                    .build()
+                            }
+                        )
                         .build()
                 )
 
@@ -48,7 +58,6 @@ class PhraseClassesWriter(private val packageName: String, private val stringRes
                         .addStatement("return %T(%L)", phraseClassName, "context")
                         .build()
                 )
-
             }
         }
     }

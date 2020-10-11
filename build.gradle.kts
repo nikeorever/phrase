@@ -1,17 +1,21 @@
 @file:Suppress("UnstableApiUsage")
 
+import Dependencies.ktlint
+
 buildscript {
     dependencies {
         classpath(Dependencies.Android.gradlePlugin)
         classpath(Dependencies.Kotlin.gradlePlugin)
         classpath(Dependencies.mavenPublish)
         classpath(Dependencies.dokka)
+        classpath(Dependencies.ktlint)
     }
 
     repositories {
         mavenCentral()
         jcenter()
         google()
+        gradlePluginPortal()
     }
 }
 
@@ -21,6 +25,25 @@ subprojects {
         mavenCentral()
         jcenter()
         google()
+        gradlePluginPortal()
+    }
+    apply(plugin = "org.jlleitschuh.gradle.ktlint")
+
+    // Configuration documentation: https://github.com/JLLeitschuh/ktlint-gradle#configuration
+    configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+        // Prints the name of failed rules
+        verbose.set(true)
+        // Default "plain" reporter is actually harder to read.
+        reporters {
+            reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.JSON)
+        }
+        disabledRules.set(
+            setOf(
+                // IntelliJ refuses to sort imports correctly.
+                // This is a known issue: https://github.com/pinterest/ktlint/issues/527
+                "import-ordering"
+            )
+        )
     }
 
     buildDir = File(rootProject.buildDir, name)
