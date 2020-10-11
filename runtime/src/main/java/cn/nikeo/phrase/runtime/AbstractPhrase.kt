@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.annotation.StringRes
 import com.squareup.phrase.Phrase
 
-abstract class AbstractPhrase {
+open class AbstractPhrase {
 
     constructor(pattern: CharSequence) {
         phrase = Phrase.from(pattern)
