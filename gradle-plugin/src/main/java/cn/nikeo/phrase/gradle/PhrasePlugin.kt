@@ -27,7 +27,7 @@ class PhrasePlugin : Plugin<Project> {
 
         require(isApp || isLibrary) {
             "Phrase plugin[cn.nikeo.phrase] must applied after AppPlugin[com.android.application] " +
-                    "or LibraryPlugin[com.android.library]"
+                "or LibraryPlugin[com.android.library]"
         }
 
         val android = project.extensions.getByType(BaseExtension::class.java)

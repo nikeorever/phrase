@@ -35,7 +35,7 @@ val generateVersionsTask = tasks.register("generateVersions") {
             // Version of cn.nikeo.phrase:runtime:_
             internal const val VERSION_PHRASE_RUNTIME = "${inputs.properties["runtimeVersion"]}"
             
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 }
