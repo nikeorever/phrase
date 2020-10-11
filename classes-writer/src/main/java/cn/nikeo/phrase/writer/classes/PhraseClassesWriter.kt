@@ -13,7 +13,7 @@ class PhraseClassesWriter(private val packageName: String, private val stringRes
         FileSpec.builder(packageName, "Phrase")
             .addComment("Automatically generated file. DO NOT MODIFY")
             .addImport(CLASS_NAME_ANDROID_CONTEXT.packageName, CLASS_NAME_ANDROID_CONTEXT.simpleName)
-            .addImport(CLASS_NAME_ABSTRACT_PHRASE.packageName, CLASS_NAME_ABSTRACT_PHRASE.simpleName)
+            .addImport(CLASS_NAME_BASE_PHRASE.packageName, CLASS_NAME_BASE_PHRASE.simpleName)
             .generateStringResourceFuncAndClass()
             .build()
             .writeTo(out)
@@ -27,7 +27,7 @@ class PhraseClassesWriter(private val packageName: String, private val stringRes
                 builder.addType(
                     TypeSpec.classBuilder(phraseClassName)
                         .addAnnotation(AnnotationSpec.builder(Suppress::class).addMember("\"%L\"", "ClassName").build())
-                        .superclass(CLASS_NAME_ABSTRACT_PHRASE)
+                        .superclass(CLASS_NAME_BASE_PHRASE)
                         .addSuperclassConstructorParameter(
                             "context = %L, stringResId = %L",
                             "context",
@@ -64,6 +64,6 @@ class PhraseClassesWriter(private val packageName: String, private val stringRes
 
     companion object {
         val CLASS_NAME_ANDROID_CONTEXT = ClassName("android.content", "Context")
-        val CLASS_NAME_ABSTRACT_PHRASE = ClassName("cn.nikeo.phrase.runtime", "AbstractPhrase")
+        val CLASS_NAME_BASE_PHRASE = ClassName("cn.nikeo.phrase.runtime", "BasePhrase")
     }
 }
