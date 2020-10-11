@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-import Dependencies.ktlint
-
 buildscript {
     dependencies {
         classpath(Dependencies.Android.gradlePlugin)
@@ -9,6 +7,7 @@ buildscript {
         classpath(Dependencies.mavenPublish)
         classpath(Dependencies.dokka)
         classpath(Dependencies.ktlint)
+        classpath(Dependencies.detekt)
     }
 
     repositories {
@@ -27,6 +26,25 @@ subprojects {
         google()
         gradlePluginPortal()
     }
+
+    apply(plugin = "io.gitlab.arturbosch.detekt")
+
+    configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+        failFast = true // fail build on any finding
+        buildUponDefaultConfig = true // preconfigure defaults
+
+        reports {
+            html.enabled = true // observe findings in your browser with structure and code snippets
+            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
+            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+        }
+    }
+
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+        // Target version of the generated JVM bytecode. It is used for type resolution.
+        jvmTarget = "1.8"
+    }
+
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
     // Configuration documentation: https://github.com/JLLeitschuh/ktlint-gradle#configuration
@@ -83,6 +101,8 @@ subprojects {
     }
 
     afterEvaluate {
+        tasks.findByName("check")?.dependsOn("detekt")
+
         // Can't use the normal placeholder syntax to reference the kotlin* version, since that
         // placeholder seems to only be evaluated if the module has a direct dependency on the library.
         val versionProperties = java.util.Properties()
