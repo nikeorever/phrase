@@ -27,6 +27,8 @@ subprojects {
         gradlePluginPortal()
     }
 
+    buildDir = File(rootProject.buildDir, name)
+
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
     configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
@@ -63,8 +65,6 @@ subprojects {
             )
         )
     }
-
-    buildDir = File(rootProject.buildDir, name)
 
     plugins.withId("org.jetbrains.kotlin.android") {
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {

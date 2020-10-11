@@ -26,7 +26,8 @@ class PhrasePlugin : Plugin<Project> {
         val isLibrary = project.plugins.hasPlugin(LibraryPlugin::class.java)
 
         require(isApp || isLibrary) {
-            "Phrase plugin[cn.nikeo.phrase] must applied after AppPlugin[com.android.application] or LibraryPlugin[com.android.library]"
+            "Phrase plugin[cn.nikeo.phrase] must applied after AppPlugin[com.android.application] " +
+                    "or LibraryPlugin[com.android.library]"
         }
 
         val android = project.extensions.getByType(BaseExtension::class.java)
@@ -68,8 +69,8 @@ class PhrasePlugin : Plugin<Project> {
 
         variant.registerJavaGeneratingTask(generatePhraseTask, outputDir)
 
-        val kotlinCompileTask =
-            project.tasks.findByName("compile${variantSourceSetRes.variantName.capitalize(Locale.getDefault())}Kotlin") as KotlinCompile
+        val kotlinCompileTaskName = "compile${variantSourceSetRes.variantName.capitalize(Locale.getDefault())}Kotlin"
+        val kotlinCompileTask = project.tasks.findByName(kotlinCompileTaskName) as KotlinCompile
         kotlinCompileTask.dependsOn(generatePhraseTask)
         val srcSet = project.objects.sourceDirectorySet(
             "mainPhrase${variantSourceSetRes.variantName}",
@@ -90,7 +91,7 @@ class PhrasePlugin : Plugin<Project> {
 
         project.dependencies.add(
             configuration,
-            "cn.nikeo.phrase:runtime:$runtimeVersion"
+            "cn.nikeo.phrase:runtime:$VERSION_PHRASE_RUNTIME"
         )
     }
 

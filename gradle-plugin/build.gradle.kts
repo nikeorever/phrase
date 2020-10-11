@@ -18,14 +18,14 @@ sourceSets {
     }
 }
 
-val generateVersionTask = tasks.register("generateVersion") {
+val generateVersionsTask = tasks.register("generateVersions") {
     val outputDir = file("$buildDir/gen")
 
     inputs.property("runtimeVersion", project.property("VERSION_NAME"))
     outputs.dir(outputDir)
 
     doLast {
-        val versionFile = file("$outputDir/cn/nikeo/phrase/gradle/runtimeVersion.kt")
+        val versionFile = file("$outputDir/cn/nikeo/phrase/gradle/Versions.kt")
         versionFile.parentFile.mkdirs()
         versionFile.writeText(
             """
@@ -33,12 +33,13 @@ val generateVersionTask = tasks.register("generateVersion") {
             package cn.nikeo.phrase.gradle
             
             // Version of cn.nikeo.phrase:runtime:_
-            internal const val runtimeVersion = "${inputs.properties["runtimeVersion"]}"
+            internal const val VERSION_PHRASE_RUNTIME = "${inputs.properties["runtimeVersion"]}"
+            
         """.trimIndent()
         )
     }
 }
 
-tasks.getByName("compileKotlin").dependsOn(generateVersionTask)
+tasks.getByName("compileKotlin").dependsOn(generateVersionsTask)
 
 apply("$rootDir/gradle/configure-maven-publish.gradle")
