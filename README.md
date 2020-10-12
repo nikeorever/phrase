@@ -12,15 +12,15 @@ The goal of this library is consistent with [Paraphrase](https://github.com/Jake
 Sample
 =====
 
-Do write your format strings like this (**Support Comment**):
+**Do** write your format strings like this (**Support Comment**):
 ```xml
 <!--This is a comment of greeting string-->
 <string name="greeting">Hello, {other_name}! My name is {my_name}.</string>
 ```
 
-Execute gradle task 'generateDebugPhraseClasses' for debug build type
+Execute gradle task 'generate{**variant**}PhraseClasses'
 ```shell script
-./gradlew :app:generateDebugPhraseClasses
+./gradlew :{module}:generate{variant}PhraseClasses
 ```
 
 After successful execution, Gradle Plugin will generate a Kotlin File named **Phrase.kt** for you
@@ -57,7 +57,7 @@ class Phrase_greeting(
 fun greeting(context: Context): Phrase_greeting = Phrase_greeting(context)
 ```
 
-Do enjoy formatting them like this:
+**Do** enjoy formatting them like this:
 ```kotlin
 text.text = greeting(this)
     .my_name("Jake Wharton")
