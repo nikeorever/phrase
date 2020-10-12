@@ -32,7 +32,7 @@ abstract class GeneratePhraseClassesTask : DefaultTask() {
                         .walkTopDown()
                         .asSequence()
                         .filter { it.isFile && it.path.endsWith(SdkConstants.DOT_XML) }
-                        .map(::readXml)
+                        .map { readXml(it) }
                         .filter { it.documentElement.nodeName == "resources" }
                         .mapNotNull { document ->
                             document.documentElement.getElementsByTagName("string").takeIf {

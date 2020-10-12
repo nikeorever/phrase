@@ -31,7 +31,7 @@ class PhrasePlugin : Plugin<Project> {
         }
 
         val android = project.extensions.getByType(BaseExtension::class.java)
-        android.buildTypes.onEach(::addDependencies).whenObjectAdded(::addDependencies)
+        android.buildTypes.onEach { addDependencies(it) }.whenObjectAdded { addDependencies(it) }
 
         val variants = when {
             isApp -> project.extensions.getByType(AppExtension::class.java).applicationVariants
@@ -39,7 +39,7 @@ class PhrasePlugin : Plugin<Project> {
             else -> error("PhrasePlugin[cn.nikeo.phrase] just support app or library")
         }
 
-        variants.onEach(::configureVariant).whenObjectAdded(::configureVariant)
+        variants.onEach { configureVariant(it) }.whenObjectAdded { configureVariant(it) }
     }
 
     private fun configureVariant(variant: BaseVariant) {
