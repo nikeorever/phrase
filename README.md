@@ -7,13 +7,14 @@ The reason why I created this library
 Since [Paraphrase](https://github.com/JakeWharton/paraphrase) has been in a state of **experimental**, 
 and the project is too old, it seems difficult to maintain, so I created this library. 
 
-The purpose of this library is the same as [Paraphrase](https://github.com/JakeWharton/paraphrase) 
+The goal of this library is consistent with [Paraphrase](https://github.com/JakeWharton/paraphrase)
 
 Sample
 =====
 
-Do write your format strings like this:
+Do write your format strings like this (**Support Comment**):
 ```xml
+<!--This is a comment of greeting string-->
 <string name="greeting">Hello, {other_name}! My name is {my_name}.</string>
 ```
 
@@ -47,6 +48,12 @@ class Phrase_greeting(
   }
 }
 
+/**
+ * This is a comment of greeting string
+ *
+ * The string resource corresponding to [greeting] is in
+ * /home/xianxueliang/AndroidStudioProjects/ReparaturApplication/app/src/main/res/values/strings.xml
+ */
 fun greeting(context: Context): Phrase_greeting = Phrase_greeting(context)
 ```
 
@@ -76,7 +83,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "cn.nikeo.phrase:gradle-plugin:1.0.0"
+        classpath "cn.nikeo.phrase:gradle-plugin:1.1.0"
     }
 }
 ```
