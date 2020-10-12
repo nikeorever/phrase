@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka")
+    id("com.jakewharton.confundus")
 }
 
 dependencies {

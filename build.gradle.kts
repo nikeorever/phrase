@@ -8,6 +8,7 @@ buildscript {
         classpath(Dependencies.dokka)
         classpath(Dependencies.ktlint)
         classpath(Dependencies.detekt)
+        classpath(Dependencies.confundus)
     }
 
     repositories {
@@ -32,7 +33,8 @@ subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
 
     configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
-        failFast = true // fail build on any finding
+        failFast = false // fail build on any finding
+        ignoreFailures = true
         buildUponDefaultConfig = true // preconfigure defaults
 
         reports {
