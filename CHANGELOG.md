@@ -7,7 +7,7 @@ Version 1.1.0 *(2020-10-12)*
 - Rename `AbstractPhrase` to `BasePhrase`.
 
 ### Added
-- Support emit string resource XML comment as method Javadoc.
+- Support for emitting string resource XML comment as method Javadoc.
 
 
 Version 1.0.0 *(2020-10-10)*
