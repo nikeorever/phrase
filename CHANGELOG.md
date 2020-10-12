@@ -4,7 +4,7 @@ Change Log
 Version 1.1.0 *(2020-10-12)*
 ----------------------------
 ### Changed
-- Change `AbstractPhrase` to `BasePhrase`.
+- Rename `AbstractPhrase` to `BasePhrase`.
 
 ### Added
 - Support emit string resource XML comment as method Javadoc.
