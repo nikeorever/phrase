@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.1.2 *(2020-10-13)*
+----------------------------
+### Fixed
+- Fix the problem of missing pom files in the classes-writer library in version 1.1.1. 
+
+
 Version 1.1.1 *(2020-10-13)*
 ----------------------------
 ### Fixed

@@ -83,7 +83,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "cn.nikeo.phrase:gradle-plugin:1.1.1"
+        classpath "cn.nikeo.phrase:gradle-plugin:1.1.2"
     }
 }
 ```
