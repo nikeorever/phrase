@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.1.1 *(2020-10-13)*
+----------------------------
+### Fixed
+- Fix the problem of **No value has been specified for property 'stringResources'**. 
+
+
 Version 1.1.0 *(2020-10-12)*
 ----------------------------
 ### Changed

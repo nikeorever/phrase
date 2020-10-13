@@ -20,7 +20,7 @@ abstract class GeneratePhraseClassesTask : DefaultTask() {
     abstract val variantSourceSetRes: Property<VariantSourceSetRes>
 
     @get:Input
-    val stringResources: List<StringResource>?
+    val stringResources: List<StringResource>
         get() {
             return variantSourceSetRes.get().sourceSetResCollection.map(SourceSetRes::resDirectories)
                 .reduceOrNull { acc, collection -> acc + collection }
@@ -35,6 +35,7 @@ abstract class GeneratePhraseClassesTask : DefaultTask() {
                         .reduceOrNull { acc, list -> acc + list }
                 }
                 ?.reduceOrNull { acc, list -> acc + list }
+                .orEmpty()
         }
 
     @get:OutputDirectory
@@ -47,7 +48,7 @@ abstract class GeneratePhraseClassesTask : DefaultTask() {
             FileUtils.deleteDirectory(outputFile)
         }
 
-        if (!stringResources.isNullOrEmpty()) {
+        if (stringResources.isNotEmpty()) {
             PhraseClassesWriter(packageName = packageName.get(), stringResources = stringResources.unsafeCast())
                 .writeTo(outputFile)
         }
