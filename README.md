@@ -1,5 +1,8 @@
 Phrase
 ===========
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cn.nikeo.phrase/gradle-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cn.nikeo.phrase/gradle-plugin)
+
 A Gradle plugin which generates compile-safe format string builders.
 
 The reason why I created this library
