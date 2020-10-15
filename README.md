@@ -36,7 +36,7 @@ import kotlin.Suppress
 @Suppress("ClassName")
 class Phrase_greeting(
   context: Context
-) : AbstractPhrase(context = context, stringResId = R.string.greeting) {
+) : BasePhrase(context = context, stringResId = R.string.greeting) {
   fun my_name(value: CharSequence): Phrase_greeting {
     put("my_name", value)
     return this
